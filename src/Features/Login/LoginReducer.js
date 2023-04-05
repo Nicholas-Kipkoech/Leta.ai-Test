@@ -25,9 +25,19 @@ const authReducer = createSlice({
         userId,
       };
     },
+    logout: (state) => {
+      return {
+        ...state,
+        isLoggedIn: false,
+        jwtToken: null,
+        refreshToken: null,
+        username: null,
+        userId: null,
+      };
+    },
   },
 });
 
-export const { login } = authReducer.actions;
+export const { login, logout } = authReducer.actions;
 
 export default authReducer.reducer;
