@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialState  = {
   isLoggedIn: false,
   jwtToken: null,
   refreshToken: null,
@@ -25,6 +25,7 @@ const authReducer = createSlice({
         userId,
       };
     },
+    //logout reducer action
     logout: (state) => {
       return {
         ...state,
