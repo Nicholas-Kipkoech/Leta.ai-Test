@@ -3,7 +3,7 @@ import { AuthServiceClient } from '../../generated/AuthServiceClientPb'
 import { LoginRequest } from '../../generated/auth_pb'
 
 
-const authService = new AuthServiceClient('http://localhost:5000',null)
+const authService = new AuthServiceClient('http://localhost:8080',null)
 
 const Login = () => {
   const [username,setUsername]=useState("")
@@ -18,9 +18,10 @@ const Login = () => {
      if(err){
       throw Error(err)
      }else{
-        console.log(response)
-        const jwtToken = response.getjwtToken()
+        const jwtToken = response.array[2]
+        const refreshToken = response.array[3]
         localStorage.setItem('jwtToken',jwtToken)
+        localStorage.setItem('refreshToken',refreshToken)
      }
   
   
