@@ -5,8 +5,8 @@ interface ProtectedRouteProps {
   children: any;
 }
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  //get authState from the browserStorage to persists the logged in state
-  const authState: any = localStorage.getItem("authState");
+  //get authState-accessToken from the browserStorage to persists the logged in state
+  const authState: any = localStorage.getItem("accessToken");
   const location = useLocation();
   //redirect to login if no authState
   if (!authState) {
