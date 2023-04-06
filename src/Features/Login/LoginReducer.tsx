@@ -1,11 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState  = {
-  isLoggedIn: false,
-  jwtToken: null,
+interface AuthState {
+  accessToken: string | null;
+  refreshToken: string | null;
+  isAuthenticated: boolean;
+  error: string | null;
+  username: string | null;
+  password: string | null;
+  userId: string | null;
+}
+
+const initialState: AuthState = {
+  isAuthenticated: false,
+  password: null,
+  accessToken: null,
   refreshToken: null,
   username: null,
   userId: null,
+  error: null,
 };
 
 // auth reducer method
@@ -15,25 +27,27 @@ const authReducer = createSlice({
   reducers: {
     // login reducer action
     login: (state, { type, payload }) => {
-      const { jwtToken, refreshToken, username, userId } = payload;
+      const { accessToken, refreshToken, username, userId, password } = payload;
       return {
         ...state,
-        isLoggedIn: true,
-        jwtToken,
+        isAuthenticated: true,
+        accessToken,
         refreshToken,
         username,
         userId,
+        password,
       };
     },
     //logout reducer action
     logout: (state) => {
       return {
         ...state,
-        isLoggedIn: false,
-        jwtToken: null,
+        isAuthenticated: false,
+        accessToken: null,
         refreshToken: null,
         username: null,
         userId: null,
+        password: null,
       };
     },
   },
