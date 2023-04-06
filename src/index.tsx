@@ -5,12 +5,13 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./Features/Login/LoginReducer";
+import ContactsReducer from "./Features/Contacts/ContactsReducer";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 const store = configureStore({
-  reducer: authReducer,
+  reducer: { authReducer, ContactsReducer },
 });
 root.render(
   <React.StrictMode>

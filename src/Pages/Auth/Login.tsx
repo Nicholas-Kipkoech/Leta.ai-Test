@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { login } from "../../Features/Login/LoginReducer";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import Navbar from "../Navbar/Navbar";
 
 const authService = new AuthServiceClient("http://localhost:8080", null);
 
