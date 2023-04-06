@@ -33,7 +33,7 @@ const Login = () => {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         dispatch(login({ username, password, accessToken, refreshToken }));
-        navigate("/home");
+        navigate("/dashboard");
       }
     });
   };
