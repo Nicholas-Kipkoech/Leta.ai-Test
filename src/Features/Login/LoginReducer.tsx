@@ -28,7 +28,6 @@ const authReducer = createSlice({
     // login reducer action
     login: (state, { type, payload }) => {
       const { accessToken, refreshToken, username, userId, password } = payload;
-      localStorage.setItem("authState", JSON.stringify(payload));
       return {
         ...state,
         isAuthenticated: true,
