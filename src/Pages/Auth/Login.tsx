@@ -4,26 +4,36 @@ import { LoginRequest } from "../../generated/auth_pb";
 import AuthInput from "../../reusableComponents/AuthInput";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { login } from "../../Features/Login/LoginReducer";
+import { useNavigate } from "react-router-dom";
 
 const authService = new AuthServiceClient("http://localhost:8080", null);
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // login function
   const handleLogin = () => {
     const _request = new LoginRequest();
     _request.setUsername(username);
     _request.setPassword(password);
 
+    /** make a login request using the payload provided */
     authService.login(_request, {}, (err: any, response: any) => {
       if (err) {
         toast("Something went wrong!!");
       } else {
-        const jwtToken = response.array[2];
+        const accessToken = response.array[2];
         const refreshToken = response.array[3];
-        localStorage.setItem("jwtToken", jwtToken);
+        localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
+        dispatch(login({ username, password, accessToken, refreshToken }));
+        navigate("/home");
       }
     });
   };
