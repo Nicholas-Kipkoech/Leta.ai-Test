@@ -1,12 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import { ContactServiceClient } from "../../generated/ContactsServiceClientPb";
 import { Empty } from "../../generated/contacts_pb";
 
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { loadContacts } from "../../Features/Contacts/ContactsReducer";
 
 const Dashboard = () => {
+  //get token for authorization
   const token = Cookies.get("accessToken");
+
+  const dispatch = useDispatch();
 
   const metadata = { authorization: `${token}` };
 
@@ -22,7 +27,7 @@ const Dashboard = () => {
         console.log("error fetching contacts");
         return;
       } else {
-        console.log(response.getContactsList());
+        dispatch(loadContacts(response.getContactsList()));
       }
     });
   }, []);
