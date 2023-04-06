@@ -1,3 +1,5 @@
+import { useState } from "react";
+import CustomModal from "../../reusableComponents/CustomModal";
 import Navbar from "../Navbar/Navbar";
 
 import {
@@ -5,38 +7,66 @@ import {
   ButtonGroup,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  styled,
-  tableCellClasses,
 } from "@mui/material";
 
-const Dashboard = () => {
-  //get token for authorization
+import CustomInput from "../../reusableComponents/CustomInput";
+import {
+  StyledTableCell,
+  StyledTableRow,
+} from "../../reusableComponents/StyledComponents";
 
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    "&:last-child td, &:last-child th": {
-      border: 0,
-    },
-  }));
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
+const Dashboard = () => {
+  const [visible, setVisible] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
   return (
     <div className="w-full mr-60 ml-60 justify-center ">
       <Navbar />
+      <div className="justify-center mt-7 mb-7">
+        <Button
+          color="primary"
+          className="bg-blue-400"
+          onClick={() => setVisible(true)}
+        >
+          Add Contact
+        </Button>
+        <CustomModal
+          ModalVisible={visible}
+          handleCancel={() => setVisible(false)}
+          handleOk={() => setVisible(false)}
+          Title="Add contact"
+          content={
+            <>
+              <CustomInput
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                label="Name"
+                type="text"
+                placeholder="Enter name"
+              />
+              <CustomInput
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                label="Email"
+                type="email"
+                placeholder="Enter email"
+              />
+              <CustomInput
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                label="Phone"
+                type="text"
+                placeholder="Enter phone number"
+              />
+            </>
+          }
+        />
+      </div>
       <TableContainer>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
