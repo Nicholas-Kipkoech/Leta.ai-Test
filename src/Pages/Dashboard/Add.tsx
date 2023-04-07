@@ -2,22 +2,19 @@ import React, { useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import CustomInput from "../../reusableComponents/CustomInput";
 import { Button } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { addContact } from "../../Features/Contacts/ContactsReducer";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
 import { ContactServiceClient } from "../../generated/ContactsServiceClientPb";
-import { Contact, ContactList } from "../../generated/contacts_pb";
+import { Contact } from "../../generated/contacts_pb";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
 
 const Add = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const id = nanoid();
 
-  const dispatch = useDispatch();
+  const id = nanoid();
   const navigate = useNavigate();
 
   //payload object
@@ -28,7 +25,7 @@ const Add = () => {
 
   const handleSubmit = () => {
     if (!name || !email || !phone) {
-      setError("Please input all fields");
+      toast("Please input all fields");
     } else {
       const contact = new Contact();
       contact.setName(name);
@@ -42,8 +39,7 @@ const Add = () => {
           console.log(err);
           return;
         }
-        console.log(response.toObject());
-        // dispatch(addContact(response.toObject().array));
+        return navigate("/dashboard");
       });
     }
   };
@@ -52,7 +48,6 @@ const Add = () => {
     <div className="w-full  mr-60 ml-60 justify-center  ">
       <Navbar />
       <form>
-        {error && <h2 className="text-red-600 justify-center">{error}</h2>}
         <div className=" flex gap-6 border-gray-600  justify-center">
           <CustomInput
             value={name}
