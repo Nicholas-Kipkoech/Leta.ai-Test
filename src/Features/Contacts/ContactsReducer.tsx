@@ -33,14 +33,13 @@ const contactsReducer = createSlice({
     addContact: (state, { payload }) => {
       const newContact = payload;
       const updatedContacts = [...state.contacts, newContact];
-      localStorage.setItem("contacts", JSON.stringify(updatedContacts));
       return { ...state, contacts: updatedContacts };
     },
     deleteContact: (state, { payload }) => {
-      const filteredContacts = (state.contacts = state.contacts.filter(
+      const filteredContacts = state.contacts.filter(
         (contact) => contact.id !== payload
-      ));
-      localStorage.setItem("contacts", JSON.stringify(filteredContacts));
+      );
+
       return { ...state, contacts: filteredContacts };
     },
     getContact: (state, { payload }) => {
@@ -59,7 +58,7 @@ const contactsReducer = createSlice({
         updatedContact,
         ...state.contacts.slice(index + 1),
       ];
-      localStorage.setItem("contacts", JSON.stringify(updatedContactsList));
+
       return {
         ...state,
         contacts: updatedContactsList,
