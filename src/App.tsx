@@ -6,6 +6,8 @@ import Login from "./Pages/Auth/Login";
 
 import ProtectedRoute from "./Pages/Dashboard/ProtectedRoute";
 import Dashboard from "./Pages/Dashboard/Dashboard";
+import Add from "./Pages/Dashboard/Add";
+import Edit from "./Pages/Dashboard/Edit";
 function App() {
   return (
     <>
@@ -13,6 +15,8 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/add" element={<Add />} />
+            <Route path="/edit" element={<Edit />} />
             <Route
               path="/dashboard"
               element={
