@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import CustomModal from "../../reusableComponents/CustomModal";
 import Navbar from "../Navbar/Navbar";
 
@@ -39,6 +39,7 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
 
+  //contact payload
   const contactData: Contact = {
     id: nanoid(),
     name,
@@ -54,24 +55,26 @@ const Dashboard = () => {
       setFormError("Please fill in all the  fields.");
       return;
     }
-
+    //add contact
     dispatch(addContact(contactData));
     setFormError(null);
     setEmail("");
     setPhone("");
     setName("");
   };
-
+  //deleting contact
   const handleDelete = (id: string) => {
     dispatch(deleteContact(id));
   };
 
+  //fn for editing the contact
   const handleEdit = (id: string) => {
     dispatch(editContact({ id, email, phone, name }));
     dispatch(getContact(id));
     setEditVisible(false);
   };
 
+  //...get contacts from the array
   const { contacts } = useSelector((state: any) => state.contacts);
 
   return (
