@@ -17,7 +17,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { loadContacts } from "../../Features/Contacts/ContactsReducer";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
 import { ContactServiceClient } from "../../generated/ContactsServiceClientPb";
 import { Empty } from "../../generated/contacts_pb";
 import { useEffect } from "react";
@@ -26,6 +25,7 @@ import { ToastContainer } from "react-toastify";
 import { AuthServiceClient } from "../../generated/AuthServiceClientPb";
 import { UserRequest } from "../../generated/auth_pb";
 import { setUser } from "../../Features/user/userReducer";
+import { getTokenAndRefreshIfNeeded } from "../../armory/accessToken";
 
 const Dashboard = () => {
   //...get contacts from the array
@@ -34,9 +34,8 @@ const Dashboard = () => {
 
   // fn for fetching contacts from the backend
 
-  const fetchContacts = () => {
-    const token = Cookies.get("accessToken");
-
+  const fetchContacts = async () => {
+    const token = await getTokenAndRefreshIfNeeded();
     const metadata = { authorization: `${token}` };
 
     const contactService = new ContactServiceClient("http://localhost:8080");
