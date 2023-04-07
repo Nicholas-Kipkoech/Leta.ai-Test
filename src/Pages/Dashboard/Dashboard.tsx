@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import CustomModal from "../../reusableComponents/CustomModal";
 import Navbar from "../Navbar/Navbar";
 
@@ -22,12 +22,14 @@ import {
   Contact,
   addContact,
   deleteContact,
+  editContact,
+  getContact,
 } from "../../Features/Contacts/ContactsReducer";
 import { nanoid } from "@reduxjs/toolkit";
-import { ToastContainer, toast } from "react-toastify";
 
 const Dashboard = () => {
-  const [visible, setVisible] = useState(false);
+  const [addVisible, setAddVisible] = useState(false);
+  const [editVisible, setEditVisible] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -64,6 +66,12 @@ const Dashboard = () => {
     dispatch(deleteContact(id));
   };
 
+  const handleEdit = (id: string) => {
+    dispatch(editContact({ id, email, phone, name }));
+    dispatch(getContact(id));
+    setEditVisible(false);
+  };
+
   const { contacts } = useSelector((state: any) => state.contacts);
 
   return (
@@ -73,13 +81,13 @@ const Dashboard = () => {
         <Button
           color="primary"
           className="bg-blue-400"
-          onClick={() => setVisible(true)}
+          onClick={() => setAddVisible(true)}
         >
           Add Contact
         </Button>
         <CustomModal
-          ModalVisible={visible}
-          handleCancel={() => setVisible(false)}
+          ModalVisible={addVisible}
+          handleCancel={() => setAddVisible(false)}
           handleOk={handleSubmit}
           Title="Add contact"
           content={
@@ -137,7 +145,44 @@ const Dashboard = () => {
                     aria-label="contained primary button group"
                     className="gap-5"
                   >
-                    <Button color="primary">Edit</Button>
+                    <Button
+                      color="primary"
+                      onClick={() => setEditVisible(true)}
+                    >
+                      Edit
+                    </Button>
+                    <CustomModal
+                      ModalVisible={editVisible}
+                      handleCancel={() => setEditVisible(false)}
+                      Title="Edit contact"
+                      handleOk={() => handleEdit(contact.id)}
+                      content={
+                        <>
+                          <CustomInput
+                            placeholder="Enter name"
+                            name="newName"
+                            label="Name"
+                            value={name}
+                            type="text"
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                          <CustomInput
+                            placeholder="Enter email"
+                            label="Email"
+                            value={email}
+                            type="email"
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                          <CustomInput
+                            placeholder="Enter phone"
+                            label="Phone"
+                            value={phone}
+                            type="text"
+                            onChange={(e) => setPhone(e.target.value)}
+                          />
+                        </>
+                      }
+                    />
                     <Button
                       color="error"
                       onClick={() => handleDelete(contact.id)}
