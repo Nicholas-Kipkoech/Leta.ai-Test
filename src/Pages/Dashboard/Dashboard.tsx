@@ -15,13 +15,44 @@ import {
   StyledTableRow,
 } from "../../reusableComponents/StyledComponents";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteContact } from "../../Features/Contacts/ContactsReducer";
+import {
+  deleteContact,
+  loadContacts,
+} from "../../Features/Contacts/ContactsReducer";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { ContactServiceClient } from "../../generated/ContactsServiceClientPb";
+import { Empty } from "../../generated/contacts_pb";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   //...get contacts from the array
   const { contacts } = useSelector((state: any) => state.contacts);
   const dispatch = useDispatch();
+
+  const fetchContacts = () => {
+    const token = Cookies.get("accessToken");
+
+    const metadata = { authorization: `${token}` };
+
+    const contactService = new ContactServiceClient(
+      "http://localhost:8080",
+      null
+    );
+
+    const allContacts = new Empty();
+    contactService.getContacts(allContacts, metadata, (err, response) => {
+      if (err) {
+        console.log("error fetching contacts");
+        return;
+      } else {
+        dispatch(loadContacts(response.toObject().contactsList));
+      }
+    });
+  };
+  useEffect(() => {
+    fetchContacts();
+  }, []);
 
   const handleDelete = (id: string) => {
     dispatch(deleteContact(id));

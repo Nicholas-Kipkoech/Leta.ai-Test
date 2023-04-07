@@ -6,35 +6,45 @@ import { useDispatch } from "react-redux";
 import { addContact } from "../../Features/Contacts/ContactsReducer";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
+import { ContactServiceClient } from "../../generated/ContactsServiceClientPb";
+import { Contact, ContactList } from "../../generated/contacts_pb";
+import Cookies from "js-cookie";
 
 const Add = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const id = nanoid();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //payload object
 
-  let contactData = {
-    name,
-    phone,
-    email,
-    id: nanoid(),
-  };
+  const client = new ContactServiceClient("http://localhost:8080", null);
+  const token = Cookies.get("accessToken");
+  const metadata = { authorization: `${token}` };
 
   const handleSubmit = () => {
     if (!name || !email || !phone) {
       setError("Please input all fields");
     } else {
-      dispatch(addContact(contactData));
-      setError("");
-      setName("");
-      setPhone("");
-      setEmail("");
-      return navigate("/dashboard");
+      const contact = new Contact();
+      contact.setName(name);
+      contact.setId(id);
+      contact.setEmail(email);
+      contact.setPhone(phone);
+
+      //   const request = new Contact();
+      client.addContact(contact, metadata, (err, response) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log(response.toObject());
+        // dispatch(addContact(response.toObject().array));
+      });
     }
   };
 
