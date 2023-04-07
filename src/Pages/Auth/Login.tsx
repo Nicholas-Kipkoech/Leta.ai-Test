@@ -4,15 +4,13 @@ import { LoginRequest } from "../../generated/auth_pb";
 import AuthInput from "../../reusableComponents/AuthInput";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
-import { login } from "../../Features/Login/LoginReducer";
+
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const authService = new AuthServiceClient("http://localhost:8080", null);
 
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -36,7 +34,6 @@ const Login = () => {
 
         Cookies.set("accessToken", accessToken);
         Cookies.set("refreshToken", refreshToken);
-        dispatch(login({ username, password, accessToken, refreshToken }));
         navigate("/dashboard");
       }
     });

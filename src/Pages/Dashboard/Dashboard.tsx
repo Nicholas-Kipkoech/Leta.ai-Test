@@ -15,10 +15,7 @@ import {
   StyledTableRow,
 } from "../../reusableComponents/StyledComponents";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteContact,
-  loadContacts,
-} from "../../Features/Contacts/ContactsReducer";
+import { loadContacts } from "../../Features/Contacts/ContactsReducer";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ContactServiceClient } from "../../generated/ContactsServiceClientPb";
@@ -26,6 +23,9 @@ import { Empty } from "../../generated/contacts_pb";
 import { useEffect } from "react";
 import DeleteContactButton from "../../services/DeleteContactButton";
 import { ToastContainer } from "react-toastify";
+import { AuthServiceClient } from "../../generated/AuthServiceClientPb";
+import { UserRequest } from "../../generated/auth_pb";
+import { setUser } from "../../Features/user/userReducer";
 
 const Dashboard = () => {
   //...get contacts from the array
@@ -39,15 +39,23 @@ const Dashboard = () => {
 
     const metadata = { authorization: `${token}` };
 
-    const contactService = new ContactServiceClient(
-      "http://localhost:8080",
-      null
-    );
+    const contactService = new ContactServiceClient("http://localhost:8080");
+    const userService = new AuthServiceClient("http://localhost:8080");
 
+    // Call UserMe to get the user data
+    const _userRequest = new UserRequest();
+    userService.userMe(_userRequest, metadata, (err, response) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      dispatch(setUser(response.toObject()));
+    });
+    // Call getContacts to get the contacts data
     const allContacts = new Empty();
     contactService.getContacts(allContacts, metadata, (err, response) => {
       if (err) {
-        console.log("error fetching contacts");
+        console.log(err);
         return;
       } else {
         dispatch(loadContacts(response.toObject().contactsList));

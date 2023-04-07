@@ -4,15 +4,16 @@ import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./Features/Login/LoginReducer";
+
 import ContactsReducer from "./Features/Contacts/ContactsReducer";
+import userReducer from "./Features/user/userReducer";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
 const store = configureStore({
-  reducer: { auth: authReducer, contacts: ContactsReducer },
+  reducer: { contacts: ContactsReducer, user: userReducer },
 });
 root.render(
   <React.StrictMode>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { logout } from "../../Features/Login/LoginReducer";
+
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
@@ -9,7 +9,6 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logout());
     navigate("/");
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
