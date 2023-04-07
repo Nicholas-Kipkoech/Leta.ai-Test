@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import { Input } from "antd";
 import React, { InputHTMLAttributes } from "react";
 
@@ -19,8 +20,13 @@ const CustomInput: React.FC<CustomInputProps> = ({
 }) => {
   return (
     <div>
-      <div>{label && label}</div>
-      <Input type={type} onChange={onChange} placeholder={placeholder} />
+      <div className="mt-6">{label && label}</div>
+      <TextField
+        type={type}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="w-80"
+      />
     </div>
   );
 };
