@@ -36,6 +36,7 @@ const Dashboard = () => {
 
   const fetchContacts = async () => {
     const token = await getTokenAndRefreshIfNeeded();
+    console.log("new Token..", token);
     const metadata = { authorization: `${token}` };
 
     const contactService = new ContactServiceClient("http://localhost:8080");
