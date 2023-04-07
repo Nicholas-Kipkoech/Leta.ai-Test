@@ -10,8 +10,9 @@ import ContactsReducer from "./Features/Contacts/ContactsReducer";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 const store = configureStore({
-  reducer: { authReducer, ContactsReducer },
+  reducer: { auth: authReducer, contacts: ContactsReducer },
 });
 root.render(
   <React.StrictMode>
