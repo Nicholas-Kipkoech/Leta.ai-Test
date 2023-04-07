@@ -16,6 +16,7 @@ import {
 } from "../../reusableComponents/StyledComponents";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteContact } from "../../Features/Contacts/ContactsReducer";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   //...get contacts from the array
@@ -30,8 +31,8 @@ const Dashboard = () => {
     <div className="w-full mr-60 ml-60 justify-center ">
       <Navbar />
       <div className="justify-center mt-7 mb-7">
-        <Button color="primary" className="bg-blue-400">
-          Add Contact
+        <Button color="primary" variant="contained" className="bg-blue-400">
+          <Link to="/dashboard/add">Add Contact</Link>
         </Button>
 
         <TableContainer>
@@ -65,7 +66,9 @@ const Dashboard = () => {
                       aria-label="contained primary button group"
                       className="gap-5"
                     >
-                      <Button color="primary">Edit</Button>
+                      <Button color="secondary">
+                        <Link to={`edit/${contact.id}`}>Edit</Link>
+                      </Button>
                       <Button
                         color="error"
                         onClick={() => handleDelete(contact.id)}
