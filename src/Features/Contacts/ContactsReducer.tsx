@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface Contact {
+export interface Contact {
   id: string | null;
   name: string;
   phone: string;
@@ -27,8 +27,11 @@ const contactsReducer = createSlice({
     loadContacts: (state, { payload }) => {
       return { ...state, contacts: payload };
     },
+    addContact: (state, { payload }) => {
+      return { ...state, contacts: [...state.contacts, payload] };
+    },
   },
 });
 
-export const { loadContacts } = contactsReducer.actions;
+export const { loadContacts, addContact } = contactsReducer.actions;
 export default contactsReducer.reducer;
