@@ -6,15 +6,18 @@ export interface Contact {
   phone: string;
   email: string;
 }
+
 interface ContactState {
   contacts: Contact[];
   loading: boolean;
   error: string | null;
+  selectedContact: Contact | null;
 }
 
 const initialState: ContactState = {
   contacts: [],
   loading: false,
+  selectedContact: null,
   error: null,
 };
 
@@ -35,6 +38,12 @@ const contactsReducer = createSlice({
         (contact) => contact.id !== payload
       );
     },
+    getContact: (state, { payload }) => {
+      const contact = state.contacts.find((contact) => contact.id === payload);
+      if (contact) {
+        state.selectedContact = contact;
+      }
+    },
     editContact: (state, { payload }) => {
       const index = state.contacts.findIndex(
         (contact) => contact.id === payload.id
@@ -46,6 +55,11 @@ const contactsReducer = createSlice({
   },
 });
 
-export const { loadContacts, addContact, deleteContact, editContact } =
-  contactsReducer.actions;
+export const {
+  loadContacts,
+  addContact,
+  deleteContact,
+  editContact,
+  getContact,
+} = contactsReducer.actions;
 export default contactsReducer.reducer;
