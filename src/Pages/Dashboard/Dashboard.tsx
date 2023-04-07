@@ -24,11 +24,15 @@ import Cookies from "js-cookie";
 import { ContactServiceClient } from "../../generated/ContactsServiceClientPb";
 import { Empty } from "../../generated/contacts_pb";
 import { useEffect } from "react";
+import DeleteContactButton from "../../services/DeleteContactButton";
+import { ToastContainer } from "react-toastify";
 
 const Dashboard = () => {
   //...get contacts from the array
   const { contacts } = useSelector((state: any) => state.contacts);
   const dispatch = useDispatch();
+
+  // fn for fetching contacts from the backend
 
   const fetchContacts = () => {
     const token = Cookies.get("accessToken");
@@ -54,10 +58,6 @@ const Dashboard = () => {
     fetchContacts();
   }, []);
 
-  const handleDelete = (id: string) => {
-    dispatch(deleteContact(id));
-  };
-
   return (
     <div className="w-full mr-60 ml-60 justify-center ">
       <Navbar />
@@ -65,7 +65,7 @@ const Dashboard = () => {
         <Button color="primary" variant="contained" className="bg-blue-400">
           <Link to="/dashboard/add">Add Contact</Link>
         </Button>
-
+        <ToastContainer />
         <TableContainer>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
@@ -100,12 +100,7 @@ const Dashboard = () => {
                       <Button color="secondary">
                         <Link to={`edit/${contact.id}`}>Edit</Link>
                       </Button>
-                      <Button
-                        color="error"
-                        onClick={() => handleDelete(contact.id)}
-                      >
-                        Delete
-                      </Button>
+                      <DeleteContactButton contactId={contact.id} />
                     </ButtonGroup>
                   </StyledTableCell>
                 </StyledTableRow>
