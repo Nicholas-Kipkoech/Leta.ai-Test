@@ -18,7 +18,11 @@ import {
   StyledTableRow,
 } from "../../reusableComponents/StyledComponents";
 import { useDispatch, useSelector } from "react-redux";
-import { Contact, addContact } from "../../Features/Contacts/ContactsReducer";
+import {
+  Contact,
+  addContact,
+  deleteContact,
+} from "../../Features/Contacts/ContactsReducer";
 import { nanoid } from "@reduxjs/toolkit";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -54,6 +58,10 @@ const Dashboard = () => {
     setEmail("");
     setPhone("");
     setName("");
+  };
+
+  const handleDelete = (id: string) => {
+    dispatch(deleteContact(id));
   };
 
   const { contacts } = useSelector((state: any) => state.contacts);
@@ -116,8 +124,8 @@ const Dashboard = () => {
           </TableHead>
           <TableBody>
             {contacts.map((contact: any) => (
-              <StyledTableRow>
-                <StyledTableCell component="th" scope="row" key={contact.id}>
+              <StyledTableRow key={contact.id}>
+                <StyledTableCell component="th" scope="row">
                   {contact.name}
                 </StyledTableCell>
                 <StyledTableCell align="right">{contact.phone}</StyledTableCell>
@@ -130,7 +138,12 @@ const Dashboard = () => {
                     className="gap-5"
                   >
                     <Button color="primary">Edit</Button>
-                    <Button color="error">Delete</Button>
+                    <Button
+                      color="error"
+                      onClick={() => handleDelete(contact.id)}
+                    >
+                      Delete
+                    </Button>
                   </ButtonGroup>
                 </StyledTableCell>
               </StyledTableRow>
