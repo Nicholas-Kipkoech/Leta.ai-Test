@@ -3,7 +3,7 @@ import { Modal, Button } from "antd";
 
 interface CustomModalProps {
   ModalVisible: boolean;
-  handleOk: () => void;
+  handleOk: any;
   Title: string;
   content: any;
   handleCancel: () => void;
