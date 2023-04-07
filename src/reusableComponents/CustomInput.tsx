@@ -1,5 +1,4 @@
 import { TextField } from "@mui/material";
-import { Input } from "antd";
 import React, { InputHTMLAttributes } from "react";
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -13,7 +12,6 @@ interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const CustomInput: React.FC<CustomInputProps> = ({
   onChange,
-  value,
   placeholder,
   label,
   type,
