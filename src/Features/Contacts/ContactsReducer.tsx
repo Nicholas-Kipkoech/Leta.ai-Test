@@ -35,9 +35,17 @@ const contactsReducer = createSlice({
         (contact) => contact.id !== payload
       );
     },
+    editContact: (state, { payload }) => {
+      const index = state.contacts.findIndex(
+        (contact) => contact.id === payload.id
+      );
+      if (index !== -1) {
+        state.contacts[index] = payload;
+      }
+    },
   },
 });
 
-export const { loadContacts, addContact, deleteContact } =
+export const { loadContacts, addContact, deleteContact, editContact } =
   contactsReducer.actions;
 export default contactsReducer.reducer;
