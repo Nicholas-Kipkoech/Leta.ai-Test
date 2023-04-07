@@ -28,10 +28,16 @@ const contactsReducer = createSlice({
       return { ...state, contacts: payload };
     },
     addContact: (state, { payload }) => {
-      return { ...state, contacts: [...state.contacts, payload] };
+      state.contacts.push(payload);
+    },
+    deleteContact: (state, { payload }) => {
+      state.contacts = state.contacts.filter(
+        (contact) => contact.id !== payload
+      );
     },
   },
 });
 
-export const { loadContacts, addContact } = contactsReducer.actions;
+export const { loadContacts, addContact, deleteContact } =
+  contactsReducer.actions;
 export default contactsReducer.reducer;
