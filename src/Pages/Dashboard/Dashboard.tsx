@@ -14,11 +14,17 @@ import {
   StyledTableCell,
   StyledTableRow,
 } from "../../reusableComponents/StyledComponents";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteContact } from "../../Features/Contacts/ContactsReducer";
 
 const Dashboard = () => {
   //...get contacts from the array
   const { contacts } = useSelector((state: any) => state.contacts);
+  const dispatch = useDispatch();
+
+  const handleDelete = (id: string) => {
+    dispatch(deleteContact(id));
+  };
 
   return (
     <div className="w-full mr-60 ml-60 justify-center ">
@@ -60,8 +66,12 @@ const Dashboard = () => {
                       className="gap-5"
                     >
                       <Button color="primary">Edit</Button>
-
-                      <Button color="error">Delete</Button>
+                      <Button
+                        color="error"
+                        onClick={() => handleDelete(contact.id)}
+                      >
+                        Delete
+                      </Button>
                     </ButtonGroup>
                   </StyledTableCell>
                 </StyledTableRow>
