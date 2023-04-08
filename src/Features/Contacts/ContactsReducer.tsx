@@ -37,13 +37,15 @@ const contactsReducer = createSlice({
     },
     deleteContact: (state, { payload }) => {
       const filteredContacts = state.contacts.filter(
-        (contact) => contact.id !== payload
+        (contact: { id: any }) => contact.id !== payload
       );
 
       return { ...state, contacts: filteredContacts };
     },
     getContact: (state, { payload }) => {
-      const contact = state.contacts.find((contact) => contact.id === payload);
+      const contact = state.contacts.find(
+        (contact: { id: any }) => contact.id === payload
+      );
       if (contact) {
         state.selectedContact = contact;
       }
@@ -51,7 +53,7 @@ const contactsReducer = createSlice({
     editContact: (state, { payload }) => {
       const updatedContact = payload;
       const index = state.contacts.findIndex(
-        (contact) => contact.id === updatedContact.id
+        (contact: { id: any }) => contact.id === updatedContact.id
       );
       const updatedContactsList = [
         ...state.contacts.slice(0, index),
