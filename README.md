@@ -19,3 +19,9 @@ The login page is designed to take `username` and `password` in which it will re
 The dashboard page contain different features like `Navbar`,which has some features like `Logout`,`username` and `page name` . The page also has a table which hold contacts from the `grpc web client`.
 
 ![contact dashboard](src/images/contactdashboard.png)
+
+#### Add contact page
+
+Add contact page contains input fields where a user can enter the data to create new contact which will be posted to the server and sent back as a response
+
+![add contact page](src/images/addContactPage.png)
