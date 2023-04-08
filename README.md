@@ -25,3 +25,9 @@ The dashboard page contain different features like `Navbar`,which has some featu
 Add contact page contains input fields where a user can enter the data to create new contact which will be posted to the server and sent back as a response
 
 ![add contact page](src/images/addContactPage.png)
+
+#### Update contact page
+
+Update contact page also contains input fields where a user update his or her contact. The delete functionality takes in the `contact ID` which it filters the contact and delete it returning the new array.
+
+![update contact page](src/images/updateContactPage.png)
