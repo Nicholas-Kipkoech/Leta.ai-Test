@@ -17,7 +17,7 @@ export const getRefreshAccessToken = async (refreshToken: string) => {
           reject(err);
         } else {
           const accessToken = response.toObject().accesstoken;
-          console.log("new accessToken", accessToken);
+          console.log("accessToken from endpoint========", accessToken);
           resolve(accessToken);
         }
       }

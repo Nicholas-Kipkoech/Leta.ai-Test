@@ -26,7 +26,7 @@ export const isAccessTokenValid = (): boolean => {
 // This function gets a new access token using the refresh token
 export const getNewAccessToken = async (): Promise<string | null> => {
   const refreshToken = Cookies.get("refreshToken");
-  console.log(refreshToken, "refreshToken");
+  console.log("refreshToken=========", refreshToken);
   if (!refreshToken) {
     return null;
   }
@@ -34,6 +34,7 @@ export const getNewAccessToken = async (): Promise<string | null> => {
   try {
     const response: any = await getRefreshAccessToken(refreshToken);
     const accessToken = response;
+    console.log("token from refreshToken=======", accessToken);
     Cookies.set("accessToken", accessToken);
     return accessToken;
   } catch (err) {
@@ -51,7 +52,7 @@ export const getTokenAndRefreshIfNeeded = async (): Promise<string | any> => {
 
   // access token has expired, try to get a new one
   const newAccessToken = await getNewAccessToken();
-  console.log(newAccessToken);
+  console.log("new generated when expired=======", newAccessToken);
   if (newAccessToken) {
     return newAccessToken;
   }
