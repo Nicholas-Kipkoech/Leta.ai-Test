@@ -23,12 +23,13 @@ const Login = () => {
     _request.setPassword(password);
 
     /** make a login request using the payload provided */
-    authService.login(_request, {}, (err: any, response: any) => {
+    authService.login(_request, {}, (err, response) => {
       if (err) {
         toast("Something went wrong!!");
       } else {
-        const accessToken = response.array[2];
-        const refreshToken = response.array[3];
+        //get Tokens from response
+        const accessToken = response.toObject().jwttoken;
+        const refreshToken = response.toObject().refreshtoken;
 
         //store tokens using cookies for security purpose
 

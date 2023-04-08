@@ -28,7 +28,7 @@ import { ToastContainer } from "react-toastify";
 import { AuthServiceClient } from "../../generated/AuthServiceClientPb";
 import { UserRequest } from "../../generated/auth_pb";
 import { setUser } from "../../Features/user/userReducer";
-import { getTokenAndRefreshIfNeeded } from "../../armory/accessToken";
+import Cookies from "js-cookie";
 
 const Dashboard = () => {
   //...get contacts from the array
@@ -38,8 +38,7 @@ const Dashboard = () => {
   // fn for fetching contacts from the backend
 
   const fetchContacts = async () => {
-    const token = await getTokenAndRefreshIfNeeded();
-    console.log("Generated token=======", token);
+    const token = Cookies.get("accessToken");
     const metadata = { authorization: `${token}` };
 
     const contactService = new ContactServiceClient("http://localhost:8080");
@@ -92,45 +91,40 @@ const Dashboard = () => {
                 </StyledTableCell>
               </TableRow>
             </TableHead>
-            {contacts.length > 0 ? (
-              <TableBody>
-                {contacts.map((contact: any) => (
-                  <StyledTableRow key={contact.id}>
-                    <StyledTableCell component="th" scope="row">
-                      {contact.name}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {contact.phone}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {contact.email}
-                    </StyledTableCell>
 
-                    <StyledTableCell align="right">
-                      <ButtonGroup
-                        variant="contained"
-                        aria-label="contained primary button group"
-                        className="gap-5"
-                      >
-                        <Link to={`edit/${contact.id}`}>
-                          <Button
-                            color="secondary"
-                            onClick={() => handleEdit(contact.id)}
-                          >
-                            Edit
-                          </Button>
-                        </Link>
-                        <DeleteContactButton contactId={contact.id} />
-                      </ButtonGroup>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            ) : (
-              <div className="text-red-500 text-center text-2xl ">
-                No contacts at the moment. Please add some above
-              </div>
-            )}
+            <TableBody>
+              {contacts.map((contact: any) => (
+                <StyledTableRow key={contact.id}>
+                  <StyledTableCell component="th" scope="row">
+                    {contact.name}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {contact.phone}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {contact.email}
+                  </StyledTableCell>
+
+                  <StyledTableCell align="right">
+                    <ButtonGroup
+                      variant="contained"
+                      aria-label="contained primary button group"
+                      className="gap-5"
+                    >
+                      <Link to={`edit/${contact.id}`}>
+                        <Button
+                          color="secondary"
+                          onClick={() => handleEdit(contact.id)}
+                        >
+                          Edit
+                        </Button>
+                      </Link>
+                      <DeleteContactButton contactId={contact.id} />
+                    </ButtonGroup>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </div>
