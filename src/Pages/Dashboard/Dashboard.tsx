@@ -92,39 +92,45 @@ const Dashboard = () => {
                 </StyledTableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {contacts.map((contact: any) => (
-                <StyledTableRow key={contact.id}>
-                  <StyledTableCell component="th" scope="row">
-                    {contact.name}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {contact.phone}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {contact.email}
-                  </StyledTableCell>
+            {contacts.length > 0 ? (
+              <TableBody>
+                {contacts.map((contact: any) => (
+                  <StyledTableRow key={contact.id}>
+                    <StyledTableCell component="th" scope="row">
+                      {contact.name}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {contact.phone}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {contact.email}
+                    </StyledTableCell>
 
-                  <StyledTableCell align="right">
-                    <ButtonGroup
-                      variant="contained"
-                      aria-label="contained primary button group"
-                      className="gap-5"
-                    >
-                      <Link to={`edit/${contact.id}`}>
-                        <Button
-                          color="secondary"
-                          onClick={() => handleEdit(contact.id)}
-                        >
-                          Edit
-                        </Button>
-                      </Link>
-                      <DeleteContactButton contactId={contact.id} />
-                    </ButtonGroup>
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
+                    <StyledTableCell align="right">
+                      <ButtonGroup
+                        variant="contained"
+                        aria-label="contained primary button group"
+                        className="gap-5"
+                      >
+                        <Link to={`edit/${contact.id}`}>
+                          <Button
+                            color="secondary"
+                            onClick={() => handleEdit(contact.id)}
+                          >
+                            Edit
+                          </Button>
+                        </Link>
+                        <DeleteContactButton contactId={contact.id} />
+                      </ButtonGroup>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            ) : (
+              <div className="text-red-500 text-center text-2xl ">
+                No contacts at the moment. Please add some above
+              </div>
+            )}
           </Table>
         </TableContainer>
       </div>
