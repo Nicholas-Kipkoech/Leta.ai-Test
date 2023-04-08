@@ -1,7 +1,7 @@
 import { AuthServiceClient } from "../generated/AuthServiceClientPb";
 import { RefreshAccessTokenRequest } from "../generated/auth_pb";
 
-export const refreshAccessToken = async (refreshToken: string) => {
+export const getRefreshAccessToken = async (refreshToken: string) => {
   const authService = new AuthServiceClient("http://localhost:8080");
 
   const refreshAccessTokenRequest = new RefreshAccessTokenRequest();

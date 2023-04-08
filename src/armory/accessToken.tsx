@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
-import { refreshAccessToken } from "./refreshToken";
+import { getRefreshAccessToken } from "./refreshToken";
 
 // This function checks if the access token is still valid
 export const isAccessTokenValid = (): boolean => {
@@ -32,7 +32,7 @@ export const getNewAccessToken = async (): Promise<string | null> => {
   }
 
   try {
-    const response: any = await refreshAccessToken(refreshToken);
+    const response: any = await getRefreshAccessToken(refreshToken);
     const accessToken = response;
     Cookies.set("accessToken", accessToken);
     return accessToken;
