@@ -15,7 +15,10 @@ import {
   StyledTableRow,
 } from "../../reusableComponents/StyledComponents";
 import { useDispatch, useSelector } from "react-redux";
-import { loadContacts } from "../../Features/Contacts/ContactsReducer";
+import {
+  getContact,
+  loadContacts,
+} from "../../Features/Contacts/ContactsReducer";
 import { Link } from "react-router-dom";
 import { ContactServiceClient } from "../../generated/ContactsServiceClientPb";
 import { Empty } from "../../generated/contacts_pb";
@@ -62,6 +65,9 @@ const Dashboard = () => {
       }
     });
   };
+  const handleEdit = (id: string) => {
+    dispatch(getContact(id));
+  };
   useEffect(() => {
     fetchContacts();
   }, []);
@@ -105,9 +111,14 @@ const Dashboard = () => {
                       aria-label="contained primary button group"
                       className="gap-5"
                     >
-                      <Button color="secondary">
-                        <Link to={`edit/${contact.id}`}>Edit</Link>
-                      </Button>
+                      <Link to={`edit/${contact.id}`}>
+                        <Button
+                          color="secondary"
+                          onClick={() => handleEdit(contact.id)}
+                        >
+                          Edit
+                        </Button>
+                      </Link>
                       <DeleteContactButton contactId={contact.id} />
                     </ButtonGroup>
                   </StyledTableCell>

@@ -9,7 +9,6 @@ import {
 } from "../../Features/Contacts/ContactsReducer";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { nanoid } from "@reduxjs/toolkit";
 import { ContactServiceClient } from "../../generated/ContactsServiceClientPb";
 import { Contact } from "../../generated/contacts_pb";
 import { toast } from "react-toastify";
@@ -25,11 +24,22 @@ const Edit = () => {
 
   const { id }: any = useParams();
 
+  const { selectedContact } = useSelector((state: any) => state.contacts);
+  //check if selected contact is in the reducer the prefill
+  useEffect(() => {
+    if (selectedContact) {
+      setEmail(selectedContact.email);
+      setPhone(selectedContact.phone);
+      setName(selectedContact.name);
+    }
+  }, [selectedContact]);
+
   const handleSubmit = () => {
     const token = Cookies.get("accessToken");
 
     const metadata = { authorization: `${token}` };
 
+    // call contact service client to update the contact
     const client = new ContactServiceClient("http://localhost:8080");
     const request = new Contact();
     request.setId(id);
