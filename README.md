@@ -2,9 +2,13 @@
 
 ### How to run this project
 
-`yarn install`
+```
+yarn install
+```
 
-`npm install`
+```
+npm install
+```
 
 ### Project Overview
 
@@ -37,3 +41,7 @@ Add contact page contains input fields where a user can enter the data to create
 Update contact page also contains input fields where a user update his or her contact. The delete functionality takes in the `contact ID` which it filters the contact and delete it returning the new array.
 
 ![update contact page](src/images/updateContactPage.png)
+
+```
+
+```
