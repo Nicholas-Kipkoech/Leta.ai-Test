@@ -1,5 +1,9 @@
 # LETA COMPANY REACT INTERVIEW TEST
 
+### How to run this project
+
+`yarn install ` or `npm install`
+
 ### Project Overview
 
 The goal of this challenge was to create a React application using TypeScript that manages a
