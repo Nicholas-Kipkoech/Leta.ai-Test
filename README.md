@@ -38,6 +38,10 @@ The goal of this challenge was to create a React application using TypeScript th
 simple list of contacts. The application will have the ability to add, edit, and delete contacts, as
 well as authenticate users and manage their sessions.
 
+### Backend server
+
+`gRPC` is used in this project for communication between this client with the server application.
+
 ### System UI
 
 #### Login Page
