@@ -19,6 +19,7 @@ function App() {
 
   useEffect(() => {
     const decodedToken: any = decode(accessToken);
+    //check if the token is expired
     if (
       decodedToken &&
       decodedToken.exp &&
@@ -33,11 +34,12 @@ function App() {
           console.log(err);
           return;
         }
+        ///get new access token from the response and set it
         const newAccessToken = response.getAccesstoken();
         Cookies.set("accessToken", newAccessToken);
       });
     }
-  }, [refreshToken, accessToken]);
+  }, []);
   return (
     <>
       <div className="App">
