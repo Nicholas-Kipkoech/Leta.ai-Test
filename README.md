@@ -2,12 +2,34 @@
 
 ### How to run this project
 
+#### Clone the repo
+
+```
+git clone https://github.com/Nicholas-Kipkoech/Leta.ai-Test.git
+```
+
+##### Installing dependencies
+
 ```
 yarn install
 ```
 
+or
+
 ```
 npm install
+```
+
+#### Run on development mode
+
+```
+yarn start
+```
+
+or
+
+```
+npm start
 ```
 
 ### Project Overview
