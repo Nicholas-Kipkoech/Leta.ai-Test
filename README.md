@@ -2,7 +2,9 @@
 
 ### How to run this project
 
-`yarn install ` or `npm install`
+`yarn install`
+
+`npm install`
 
 ### Project Overview
 
