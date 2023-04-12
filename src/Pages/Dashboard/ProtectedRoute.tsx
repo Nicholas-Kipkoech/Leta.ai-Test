@@ -1,5 +1,5 @@
-import Cookies from "js-cookie";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
 interface ProtectedRouteProps {
@@ -7,7 +7,8 @@ interface ProtectedRouteProps {
 }
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   //get authState-accessToken from the browserStorage to persists the logged in state
-  const authState: any = Cookies.get("accessToken");
+  const authState: any = useSelector((state: any) => state.user);
+
   const location = useLocation();
   //redirect to login if no authState
   if (!authState) {
