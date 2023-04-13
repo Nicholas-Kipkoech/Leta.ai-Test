@@ -70,6 +70,8 @@ Update contact page also contains input fields where a user update his or her co
 
 ![update contact page](src/images/updateContactPage.png)
 
-```
+#### Problems encountered
 
-```
+`refreshToken` from the `grpc` client doesn't generate new `accessToken`.
+
+Thanks for `Leta.AI` for giving me a chance to attempt this challenge.
